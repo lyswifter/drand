@@ -253,6 +253,8 @@ func (h *httpClient) Get(ctx context.Context, round uint64) (client.Result, erro
 		url = fmt.Sprintf("%spublic/%d", h.root, round)
 	}
 
+	h.l.Info("DrandHttpClient: %s round: %d", url, round)
+
 	resC := make(chan httpGetResponse, 1)
 	ctx, cancel := context.WithCancel(ctx)
 	defer cancel()
