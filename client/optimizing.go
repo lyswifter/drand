@@ -278,6 +278,9 @@ func get(ctx context.Context, client Client, round uint64) *requestResult {
 		return nil
 	}
 
+	fat := fmt.Sprintf("[%s]		%s\n", time.Now().Format("2006-01-02 15:04:05.000"), "Fetch drand from client: %+v")
+	fmt.Printf(fat, client)
+
 	stat = requestStat{client, rtt, start}
 	return &requestResult{client, res, err, &stat}
 }
