@@ -264,6 +264,8 @@ LOOP:
 // get calls Get on the passed client and returns a requestResult or nil if the context was canceled.
 func get(ctx context.Context, client Client, round uint64) *requestResult {
 	start := time.Now()
+	fat := fmt.Sprintf("[%s]		%s\n", time.Now().Format("2006-01-02 15:04:05.000"), "Fetch drand from client: %+v")
+	fmt.Printf(fat, client)
 	res, err := client.Get(ctx, round)
 	rtt := time.Since(start)
 	var stat requestStat
@@ -277,9 +279,6 @@ func get(ctx context.Context, client Client, round uint64) *requestResult {
 	if ctx.Err() != nil {
 		return nil
 	}
-
-	fat := fmt.Sprintf("[%s]		%s\n", time.Now().Format("2006-01-02 15:04:05.000"), "Fetch drand from client: %+v")
-	fmt.Printf(fat, client)
 
 	stat = requestStat{client, rtt, start}
 	return &requestResult{client, res, err, &stat}
